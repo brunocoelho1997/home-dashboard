@@ -4,7 +4,8 @@
 SoftwareSerial esp(2,3);
  
 #define DEBUG true 
-#define IP "192.168.1.91" //dashboard-api IP
+//#define IP "192.168.1.91" //dashboard-api IP - local
+#define IP "192.168.1.72" //dashboard-api IP - bs-worker
 #define PORT "8080" //dashboard-api IP
 #define SEND_DATA_ENDPOINT "/devices/sendData"
 #define DEVICE_UUID "7405707937"

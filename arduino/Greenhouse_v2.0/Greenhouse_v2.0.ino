@@ -1,9 +1,13 @@
 #include <SoftwareSerial.h>
+#include "Secrets.h"
+
 SoftwareSerial esp(2,3);
  
 #define DEBUG true 
-#define IP "192.168.1.91"// thingspeak.com ip
-String Api_key = "GET /devices/xpto"; //change it with your api key like "GET /update?key=Your Api Key"
+#define IP "192.168.1.91" //dashboard-api IP
+#define PORT "8080" //dashboard-api IP
+#define SEND_DATA_ENDPOINT "/devices/sendData"
+#define DEVICE_UUID "7405707937"
 
 int error;
 const int sensor_pin = A0;
@@ -18,9 +22,18 @@ void setup()
   
   send_command("AT+RST\r\n", 2000, DEBUG); //reset module
   send_command("AT+CWMODE=1\r\n", 1000, DEBUG); //set station mode
-  send_command("AT+CWJAP=\"NETWORK_SSID\",\"NETWORK_PASSWORD\"\r\n", 2000, DEBUG);   //connect wifi network
-  while(!esp.find("OK")) { //wait for connection
-  Serial.println("not connected");} 
+  String command = "AT+CWJAP=\"";
+  command += networkSsid;
+  command += "\",\"";
+  command += networkPassword;
+  command += "\"\r\n";
+  send_command(command, 2000, DEBUG);   //connect wifi network
+
+  
+  while(!esp.find("OK")) { 
+    //wait for connection
+    Serial.println("not connected");
+  } 
 }
 
 void loop()
@@ -39,17 +52,25 @@ void loop()
 void updatedata(){
   String command = "AT+CIPSTART=\"TCP\",\"";
   command += IP;
-  command += "\",8080";
+  command += "\",";
+  command += PORT;
+  
   Serial.println(command);
   esp.println(command);
   delay(2000);
   if(esp.find("Error")){
     return;
   }
-  command = Api_key ;
-  //command += "&field1=";   
-  //command += temp;
+  command = "GET ";
+  command += SEND_DATA_ENDPOINT;
+  command += "?uuid=";
+  command += DEVICE_UUID;
+  command += "&temperature=";
+  command += temp;
+  command += "&humidity=";   
+  command += temp + 5;
   command += "\r\n";
+  
   Serial.print("AT+CIPSEND=");
   esp.print("AT+CIPSEND=");
   Serial.println(command.length());

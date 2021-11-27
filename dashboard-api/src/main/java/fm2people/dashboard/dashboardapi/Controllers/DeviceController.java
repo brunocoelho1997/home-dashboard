@@ -14,7 +14,7 @@ public class DeviceController {
     @RequestMapping("/xpto")
     public String xpto() {
 
-        System.out.println("Hello world!");
+        System.out.println("Hello world");
 
         return "goodby";
     }

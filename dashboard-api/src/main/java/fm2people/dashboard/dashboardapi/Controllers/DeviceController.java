@@ -45,7 +45,7 @@ public class DeviceController {
     @RequestMapping("/mock")
     public String mockEndpoint() {
 
-        return "mock endpoint";
+        return "mock endpoint!!!!! asd";
 
     }
 

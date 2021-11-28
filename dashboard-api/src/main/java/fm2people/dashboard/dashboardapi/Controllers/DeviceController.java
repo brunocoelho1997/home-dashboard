@@ -41,12 +41,4 @@ public class DeviceController {
 
     }
 
-    //returns the tag to the android
-    @RequestMapping("/mock")
-    public String mockEndpoint() {
-
-        return "mock endpoint!!!!! asd";
-
-    }
-
 }

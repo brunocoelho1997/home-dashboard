@@ -11,6 +11,11 @@ echo "----------------------------"
 echo "Deleting the old image"
 docker rmi -f $(docker images --filter=reference="*dashboard-api-demo*" -q)
 
+#update repo
+echo "\n\n\n\n\n"
+echo "----------------------------"
+echo "Updating repository"
+git pull
 
 echo "\n\n\n\n\n"
 echo "----------------------------"

@@ -1,8 +1,12 @@
 package fm2people.dashboard.dashboardapi.EntitiesManagement.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Data;
+
 import javax.persistence.*;
 
 @Entity
+@Data
 public class EnvironmentData {
 
     @Id
@@ -12,6 +16,7 @@ public class EnvironmentData {
 
     @ManyToOne
     @JoinColumn(name="environmentSensorDevice_id")
+    @JsonBackReference
     private EnvironmentSensorDevice environmentSensorDevice;
 
     @Column

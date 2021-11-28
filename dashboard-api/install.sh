@@ -9,7 +9,7 @@ docker rm -f "$(docker ps | grep "home-dashboard-api" | awk '{ print $1 }')"
 echo "\n\n\n\n\n"
 echo "----------------------------"
 echo "Deleting the old image"
-docker rmi -f $(docker images --filter=reference="*dashboard-api-demo*" -q)
+docker rmi -f $(docker images --filter=reference="*dashboard-api*" -q)
 
 #update repo
 echo "\n\n\n\n\n"

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -19,6 +20,8 @@ public class EnvironmentData {
     @JsonBackReference
     private EnvironmentSensorDevice environmentSensorDevice;
 
+    @Column
+    private LocalDateTime timestamp;
     @Column
     private float temperature;
 

@@ -47,7 +47,7 @@ void loop()
   if (error==1){
     goto start; //go to label "start"
   }
-  delay(1000);
+  delay(60000);
 }
 
 void updatedata(){

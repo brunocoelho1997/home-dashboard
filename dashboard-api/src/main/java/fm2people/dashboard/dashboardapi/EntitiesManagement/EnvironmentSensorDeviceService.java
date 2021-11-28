@@ -48,6 +48,8 @@ public class EnvironmentSensorDeviceService {
 
         EnvironmentSensorDevice device = environmentSensorDeviceRepository.findByDeviceUuid(uuid);
 
-        return device.getDataHistory();
+        desiredNumberOfRecords = desiredNumberOfRecords > device.getDataHistory().size()? device.getDataHistory().size() : desiredNumberOfRecords;
+
+        return device.getDataHistory().subList(device.getDataHistory().size()-desiredNumberOfRecords, device.getDataHistory().size());
     }
 }

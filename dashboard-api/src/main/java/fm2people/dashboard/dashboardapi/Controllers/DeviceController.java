@@ -33,11 +33,11 @@ public class DeviceController {
 
     //returns the tag to the android
     @RequestMapping("/getData")
-    public List<EnvironmentData> getEnvironmentData(@RequestParam String uuid) {
+    public List<EnvironmentData> getEnvironmentData(@RequestParam String uuid, @RequestParam(defaultValue = "10") String desiredNumberOfRecords) {
 
         log.info("Was requested for environment data from device with UUID = {}.", uuid);
 
-        return environmentSensorDeviceService.getEnvironmentDataFromDevice(uuid, 10);
+        return environmentSensorDeviceService.getEnvironmentDataFromDevice(uuid, Integer.parseInt(desiredNumberOfRecords));
 
     }
 

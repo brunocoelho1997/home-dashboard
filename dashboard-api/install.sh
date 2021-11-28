@@ -1,9 +1,9 @@
 
 #stop container
-docker rm -f $(docker ps | grep "home-dashboard-api" | awk '{ print $1 }')
+docker rm -f "$(docker ps | grep "home-dashboard-api" | awk '{ print $1 }')"
 
 #delete old image
-docker rmi $(docker images --filter=reference="*dashboard-api-demo*" -q)
+docker rmi -f $(docker images --filter=reference="*dashboard-api-demo*" -q)
 
 cd ~/workspace/home-dashboard/dashboard-api/
 

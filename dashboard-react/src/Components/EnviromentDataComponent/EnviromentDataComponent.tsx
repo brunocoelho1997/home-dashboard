@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './EnviromentDataComponent.css';
 
 type EnviromentDataComponentProps = {
   msg: string
@@ -7,17 +8,12 @@ class EnviromentDataComponent extends Component<EnviromentDataComponentProps> {
 
   render() {
     return (
-      <div className="container-fluid">
+      <div className="container-fluid environmentdatacomponent">
       
-        <h1>{this.props.msg}</h1>
-
-        <div className="row">
-          <div className="col-sm-4">
-            .col-sm-4
-          </div>
-          <div className="col-sm-8">
-            .col-sm-4
-          </div>
+        <div className="card bg-dark text-white">
+          <div className="card-header">{this.props.msg}</div>
+          <div className="card-body">temperatura, humidade e fumo</div> 
+          <div className="card-footer">ultima atualizacao</div>
         </div>
 
       </div>

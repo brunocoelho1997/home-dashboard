@@ -12,8 +12,18 @@ class WeatherAndEnviromentDataComponent extends React.Component {
           </div>
           <div className="col-sm-8">
             <div className="container-fluid">
-              <EnviromentDataComponent msg="hello world"/>
-              <EnviromentDataComponent msg="hello world"/>
+
+              <div className="row">
+                <div className="col-sm-4">
+                  <EnviromentDataComponent msg="hello world"/>
+                </div>
+                <div className="col-sm-4">
+                  <EnviromentDataComponent msg="hello world"/>
+                </div>
+                <div className="col-sm-4">
+                  <EnviromentDataComponent msg="hello world"/>
+                </div>
+              </div>              
             </div>
           </div>
         </div>

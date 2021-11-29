@@ -1,3 +1,9 @@
 .environmentdatacomponent {
-    margin: 5px;
+    padding: 0px;
+}
+
+.enviromentDataComponent-card {
+
+    background-color: #555;
+
 }

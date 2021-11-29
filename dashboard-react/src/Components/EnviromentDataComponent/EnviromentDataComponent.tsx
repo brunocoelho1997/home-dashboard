@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { IEnvironmentDataDto } from '../../Logic/Interfaces';
 import './EnviromentDataComponent.css';
 
+
+
 type EnviromentDataComponentProps = {
-  msg: string
+  environmentDataDto: IEnvironmentDataDto
 }
 class EnviromentDataComponent extends Component<EnviromentDataComponentProps> {
 
@@ -10,10 +13,10 @@ class EnviromentDataComponent extends Component<EnviromentDataComponentProps> {
     return (
       <div className="container-fluid environmentdatacomponent">
       
-        <div className="card bg-dark text-white">
-          <div className="card-header">{this.props.msg}</div>
-          <div className="card-body">temperatura, humidade e fumo</div> 
-          <div className="card-footer">ultima atualizacao</div>
+        <div className="enviromentDataComponent-card">
+          <div>{this.props.environmentDataDto.name}</div>
+          <div>{this.props.environmentDataDto.sensorData}</div>
+          <div>{this.props.environmentDataDto.timestamp}</div>
         </div>
 
       </div>

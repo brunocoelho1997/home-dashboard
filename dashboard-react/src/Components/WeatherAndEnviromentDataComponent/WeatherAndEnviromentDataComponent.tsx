@@ -14,7 +14,7 @@ class WeatherAndEnviromentDataComponent extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid">
+      <div className="container-fluid pt-4">
       
         <div className="row">
           <div className="col-sm-4">

@@ -28,4 +28,7 @@ public class EnvironmentData {
     @Column
     private float humidity;
 
+    @Column
+    private Float smokeLevel;
+
 }

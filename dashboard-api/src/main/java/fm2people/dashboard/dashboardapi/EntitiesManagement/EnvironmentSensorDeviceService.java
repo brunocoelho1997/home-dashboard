@@ -32,7 +32,7 @@ public class EnvironmentSensorDeviceService {
         environmentSensorDeviceRepository.save(environmentSensorDevice);
     }
 
-    public void addData(String uuid, String temperature, String humidity) {
+    public void addData(String uuid, String temperature, String humidity, String smokeLevel) {
 
         EnvironmentSensorDevice environmentSensorDevice = environmentSensorDeviceRepository.findByDeviceUuid(uuid);
 
@@ -40,6 +40,7 @@ public class EnvironmentSensorDeviceService {
         environmentData.setHumidity(Float.parseFloat(humidity));
         environmentData.setTemperature(Float.parseFloat(temperature));
         environmentData.setEnvironmentSensorDevice(environmentSensorDevice);
+        environmentData.setSmokeLevel(smokeLevel == null? null: Float.parseFloat(smokeLevel));
         environmentData.setTimestamp(LocalDateTime.now());
 
         environmentDataRepository.save(environmentData);

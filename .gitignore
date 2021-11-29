@@ -34,3 +34,4 @@ dashboard-react/build
 dashboard-react/.dockerignore
 dashboard-react/Dockerfile
 dashboard-react/Dockerfile.prod
+dashboard-react/.idea

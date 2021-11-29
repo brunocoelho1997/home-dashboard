@@ -5,7 +5,7 @@ function App() {
   return (
     <nav className="navbar bg-dark navbar-dark shadow-sm">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">SmartHome Dashboard</a>
+        <a className="navbar-brand" href="#">Whatch My House - Dashboard</a>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
           <span className="navbar-toggler-icon"></span>
         </button>

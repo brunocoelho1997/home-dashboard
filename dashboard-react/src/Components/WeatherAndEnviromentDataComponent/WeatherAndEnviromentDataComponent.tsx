@@ -2,6 +2,7 @@ import React from 'react';
 import EnviromentDataComponent from '../EnviromentDataComponent/EnviromentDataComponent';
 import './WeatherAndEnviromentDataComponent.css';
 import { IEnvironmentDataDto } from '../../Logic/Interfaces';
+import DatetimeComponent from '../DatetimeComponent/DatetimeComponent';
 
 
 class WeatherAndEnviromentDataComponent extends React.Component {
@@ -18,7 +19,9 @@ class WeatherAndEnviromentDataComponent extends React.Component {
       
         <div className="row">
           <div className="col-sm-4">
-            .col-sm-4
+            <div className="container-fluid">
+              <DatetimeComponent />
+            </div>
           </div>
           <div className="col-sm-8">
             <div className="container-fluid">

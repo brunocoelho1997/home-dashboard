@@ -15,7 +15,7 @@ class EnviromentDataComponent extends Component<EnviromentDataComponentProps> {
       
         <div className="enviromentDataComponent-card">
           <div>{this.props.environmentDataDto.name}</div>
-          <div className="sensor-data-field">{this.props.environmentDataDto.sensorData}</div>
+          <div className="font-size-3em">{this.props.environmentDataDto.sensorData}</div>
           <div>
             <span>
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-clock p-1" viewBox="0 0 16 16">

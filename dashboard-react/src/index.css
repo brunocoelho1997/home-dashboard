@@ -21,6 +21,16 @@ body {
   font-size: 2em;
 }
 
+.default-component {
+  background-color: #282c34;
+
+  padding: 0px;
+}
+
+.default-component-card {
+  padding:5%;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

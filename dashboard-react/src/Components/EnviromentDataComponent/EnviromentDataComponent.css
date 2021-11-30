@@ -7,3 +7,7 @@
 .enviromentDataComponent-card {
     padding:5%;
 }
+
+.sensor-data-field {
+    font-size: 3em;
+}

@@ -16,7 +16,7 @@ class DatetimeComponent extends Component {
       
         <div className="datetime-component-card">
           <p className="font-size-3em">
-            {this.date.getHours()}:{this.date.getMinutes()}:{this.date.getSeconds()}
+            {(this.date.getHours()<10?'0':'') + this.date.getHours()}:{(this.date.getMinutes()<10?'0':'') + this.date.getMinutes()}:{(this.date.getSeconds()<10?'0':'') + this.date.getSeconds()}
           </p>
 
           <hr className="my-4" />

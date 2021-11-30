@@ -5,7 +5,7 @@ import './Navbar.css';
 class Navbar extends React.Component {
   render() {
     return (
-      <nav className="navbar  navbar-dark navbar-css shadow-sm">
+      <nav className="navbar bg-dark navbar-dark shadow-sm">
         <div className="container-fluid">
           <a className="navbar-brand" href="#">Whatch My House - Dashboard</a>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">

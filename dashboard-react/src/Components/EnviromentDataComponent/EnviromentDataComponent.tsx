@@ -11,9 +11,9 @@ class EnviromentDataComponent extends Component<EnviromentDataComponentProps> {
 
   render() {
     return (
-      <div className="container-fluid text-white environmentdatacomponent">
+      <div className="container-fluid text-white default-component">
       
-        <div className="enviromentDataComponent-card">
+        <div className="default-component-card">
           <div>{this.props.environmentDataDto.name}</div>
           <div className="font-size-3em">{this.props.environmentDataDto.sensorData}</div>
           <div>

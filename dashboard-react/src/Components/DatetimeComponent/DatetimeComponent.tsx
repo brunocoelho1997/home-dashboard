@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { IEnvironmentDataDto } from '../../Logic/Interfaces';
 import './DatetimeComponent.css';
 
 
@@ -12,9 +11,9 @@ class DatetimeComponent extends Component {
 
   render() {
     return (
-      <div className="container-fluid text-white datetime-component">
+      <div className="container-fluid text-white default-component">
       
-        <div className="datetime-component-card">
+        <div className="default-component-card">
           <p className="font-size-3em">
             {(this.date.getHours()<10?'0':'') + this.date.getHours()}:{(this.date.getMinutes()<10?'0':'') + this.date.getMinutes()}:{(this.date.getSeconds()<10?'0':'') + this.date.getSeconds()}
           </p>

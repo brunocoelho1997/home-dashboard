@@ -1,5 +1,6 @@
 package fm2people.dashboard.dashboardapi.EntitiesManagement;
 
+import fm2people.dashboard.dashboardapi.Dtos.EnvironmentDataDto;
 import fm2people.dashboard.dashboardapi.EntitiesManagement.Entities.EnvironmentData;
 import fm2people.dashboard.dashboardapi.EntitiesManagement.Entities.EnvironmentSensorDevice;
 import fm2people.dashboard.dashboardapi.EntitiesManagement.Enums.RoomEnum;
@@ -54,5 +55,55 @@ public class EnvironmentSensorDeviceService {
         desiredNumberOfRecords = desiredNumberOfRecords > device.getDataHistory().size()? device.getDataHistory().size() : desiredNumberOfRecords;
 
         return device.getDataHistory().subList(device.getDataHistory().size()-desiredNumberOfRecords, device.getDataHistory().size());
+    }
+
+    public List<EnvironmentDataDto> getCurrentEnvironmentData() {
+
+        List<EnvironmentSensorDevice> environmentSensorDevices = environmentSensorDeviceRepository.findAll();
+
+        List<EnvironmentDataDto> environmentDataList = new ArrayList<>();
+
+        //get the average data
+        //...
+
+        //get the current data
+        for(EnvironmentSensorDevice environmentSensorDevice : environmentSensorDevices) {
+
+            EnvironmentDataDto environmentDataDto = new EnvironmentDataDto();
+
+            List<EnvironmentData> queryFirst100ByEnvironmentSensorDevice = environmentDataRepository.queryFirst100ByEnvironmentSensorDevice(environmentSensorDevice);
+
+            EnvironmentData currentEnvironmentData = queryFirst100ByEnvironmentSensorDevice == null || queryFirst100ByEnvironmentSensorDevice.isEmpty()? null : environmentSensorDevice.getDataHistory().get(queryFirst100ByEnvironmentSensorDevice.size()-1);
+
+            if (currentEnvironmentData == null) {
+                environmentDataDto.setName(environmentSensorDevice.getName());
+                environmentDataDto.setTimestamp("-");
+                environmentDataDto.setSensorData("NA");
+
+                //temperature
+                environmentDataList.add(environmentDataDto);
+                //humidity
+                environmentDataList.add(environmentDataDto);
+                //smoke level
+                environmentDataList.add(environmentDataDto);
+
+                continue;
+            }
+
+            //temperature
+            environmentDataDto = new EnvironmentDataDto(currentEnvironmentData.getTimestamp().toString(), environmentSensorDevice.getName(), String.valueOf(currentEnvironmentData.getTemperature()));
+            environmentDataList.add(environmentDataDto);
+
+            //humidity
+            environmentDataDto = new EnvironmentDataDto(currentEnvironmentData.getTimestamp().toString(), environmentSensorDevice.getName(), String.valueOf(currentEnvironmentData.getHumidity()));
+            environmentDataList.add(environmentDataDto);
+            //smoke level
+            String smokeLevel = String.valueOf(currentEnvironmentData.getSmokeLevel() == null ? "NA" : currentEnvironmentData.getSmokeLevel());
+            environmentDataDto = new EnvironmentDataDto(currentEnvironmentData.getTimestamp().toString(), environmentSensorDevice.getName(), smokeLevel);
+            environmentDataList.add(environmentDataDto);
+
+        }
+
+        return environmentDataList;
     }
 }

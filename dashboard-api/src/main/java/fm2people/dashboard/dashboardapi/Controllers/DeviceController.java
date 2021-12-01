@@ -1,5 +1,6 @@
 package fm2people.dashboard.dashboardapi.Controllers;
 
+import fm2people.dashboard.dashboardapi.Dtos.EnvironmentDataDto;
 import fm2people.dashboard.dashboardapi.EntitiesManagement.Entities.EnvironmentData;
 import fm2people.dashboard.dashboardapi.EntitiesManagement.Entities.EnvironmentSensorDevice;
 import fm2people.dashboard.dashboardapi.EntitiesManagement.Enums.RoomEnum;
@@ -31,13 +32,21 @@ public class DeviceController {
         return "true";
     }
 
-    //returns the tag to the android
     @RequestMapping("/getData")
     public List<EnvironmentData> getEnvironmentData(@RequestParam String uuid, @RequestParam(defaultValue = "10") String desiredNumberOfRecords) {
 
         log.info("Was requested for environment data from device with UUID = {}.", uuid);
 
         return environmentSensorDeviceService.getEnvironmentDataFromDevice(uuid, Integer.parseInt(desiredNumberOfRecords));
+
+    }
+
+    @RequestMapping("/getCurrentEnvironmentData")
+    public List<EnvironmentDataDto> getCurrentEnvironmentData() {
+
+        log.info("Was requested for current environment data.");
+
+        return environmentSensorDeviceService.getCurrentEnvironmentData();
 
     }
 

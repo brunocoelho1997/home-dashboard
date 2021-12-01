@@ -7,11 +7,14 @@ import fm2people.dashboard.dashboardapi.EntitiesManagement.Enums.RoomEnum;
 import fm2people.dashboard.dashboardapi.EntitiesManagement.Repositories.EnvironmentDataRepository;
 import fm2people.dashboard.dashboardapi.EntitiesManagement.Repositories.EnvironmentSensorDeviceRepository;
 import lombok.extern.log4j.Log4j2;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -63,8 +66,7 @@ public class EnvironmentSensorDeviceService {
 
         List<EnvironmentDataDto> environmentDataList = new ArrayList<>();
 
-        //get the average data
-        //...
+        environmentDataList.addAll(getMeans());
 
         //get the current data
         for(EnvironmentSensorDevice environmentSensorDevice : environmentSensorDevices) {
@@ -108,6 +110,32 @@ public class EnvironmentSensorDeviceService {
             environmentDataList.add(environmentDataDto);
 
         }
+
+        return environmentDataList;
+    }
+
+    private Collection<? extends EnvironmentDataDto> getMeans() {
+
+        List<EnvironmentDataDto> environmentDataList = new ArrayList<>();
+
+        LocalDateTime actualLocalDatetime = LocalDateTime.now();
+        //get 00:00h of actual date
+        LocalDateTime initialLocalDateTime = LocalDateTime.of(actualLocalDatetime.getYear(), actualLocalDatetime.getMonth(), actualLocalDatetime.getDayOfMonth(),0,0);
+
+        //get the average data
+        List<EnvironmentData> findAllEnvironmentDataOfToday = environmentDataRepository.findByTimestampBetween(initialLocalDateTime, actualLocalDatetime);
+
+        //Average of the temperature
+        EnvironmentDataDto environmentDataMeanDto = new EnvironmentDataDto(actualLocalDatetime.toString(), "Média da Temperatura (Hoje)", "NA");
+        environmentDataList.add(environmentDataMeanDto);
+
+        //Average of the Humidity
+        environmentDataMeanDto = new EnvironmentDataDto(actualLocalDatetime.toString(), "Média da Humidade (Hoje)", "NA");
+        environmentDataList.add(environmentDataMeanDto);
+
+        //Average of the Humidity
+        environmentDataMeanDto = new EnvironmentDataDto(actualLocalDatetime.toString(), "Média do Nível de Fumo (Hoje)", "NA");
+        environmentDataList.add(environmentDataMeanDto);
 
         return environmentDataList;
     }

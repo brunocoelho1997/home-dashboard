@@ -71,9 +71,14 @@ public class EnvironmentSensorDeviceService {
 
             EnvironmentDataDto environmentDataDto = new EnvironmentDataDto();
 
-            List<EnvironmentData> queryFirst100ByEnvironmentSensorDevice = environmentDataRepository.queryFirst100ByEnvironmentSensorDevice(environmentSensorDevice);
-
-            EnvironmentData currentEnvironmentData = queryFirst100ByEnvironmentSensorDevice == null || queryFirst100ByEnvironmentSensorDevice.isEmpty()? null : environmentSensorDevice.getDataHistory().get(queryFirst100ByEnvironmentSensorDevice.size()-1);
+            /*
+             * will get last 100 environment data... then will filter by deviceUUID... To the last one that was sent by this device
+             */
+            List<EnvironmentData> queryFirst100ByOrderByTimestampDesc = environmentDataRepository.queryFirst100ByOrderByTimestampDesc();
+            EnvironmentData currentEnvironmentData = queryFirst100ByOrderByTimestampDesc.stream()
+                    .filter(environmentSensorDeviceTemp -> environmentSensorDeviceTemp.getEnvironmentSensorDevice().getDeviceUuid().equals(environmentSensorDevice.getDeviceUuid()))
+                    .findAny()
+                    .orElse(null);
 
             if (currentEnvironmentData == null) {
                 environmentDataDto.setName(environmentSensorDevice.getName());

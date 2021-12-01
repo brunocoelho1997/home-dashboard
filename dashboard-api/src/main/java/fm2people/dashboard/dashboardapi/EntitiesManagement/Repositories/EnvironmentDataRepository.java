@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface EnvironmentDataRepository extends JpaRepository<EnvironmentData, Long> {
 
-    List<EnvironmentData> queryFirst100ByEnvironmentSensorDevice(EnvironmentSensorDevice environmentSensorDevice);
+    List<EnvironmentData> queryFirst100ByOrderByTimestampDesc();
 }

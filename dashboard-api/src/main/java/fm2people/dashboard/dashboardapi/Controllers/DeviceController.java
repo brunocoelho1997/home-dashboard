@@ -25,7 +25,7 @@ public class DeviceController {
     @RequestMapping("/sendData")
     public String sendData(@RequestParam String uuid, @RequestParam String temperature, @RequestParam String humidity, @RequestParam(required = false) String smokeLevel) {
 
-        log.info("Was received data. UUID = {}, Temperature = {}, Humidity = {}, Smoke Level", uuid, temperature, humidity, smokeLevel);
+        log.info("Was received data. UUID = {}, Temperature = {}, Humidity = {}, Smoke Level = {}", uuid, temperature, humidity, smokeLevel);
 
         environmentSensorDeviceService.addData(uuid, temperature, humidity, smokeLevel);
 

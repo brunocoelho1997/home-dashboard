@@ -14,12 +14,12 @@ class DatetimeComponent extends Component {
       <div className="container-fluid text-white default-component">
       
         <div className="default-component-card">
-          <p className="font-size-3em">
+          <p className="font-size-2em">
             {(this.date.getHours()<10?'0':'') + this.date.getHours()}:{(this.date.getMinutes()<10?'0':'') + this.date.getMinutes()}:{(this.date.getSeconds()<10?'0':'') + this.date.getSeconds()}
           </p>
 
           <hr className="my-4" />
-          <p className="font-size-2em">
+          <p className="font-size-1-5em">
             {getDayOfTheWeek(this.dayOfWeek)} - {this.fullDate}  
           </p>
         </div>

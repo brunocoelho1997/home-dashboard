@@ -104,6 +104,7 @@ public class EnvironmentSensorDeviceService {
             //humidity
             environmentDataDto = new EnvironmentDataDto(currentEnvironmentData.getTimestamp().toString(), environmentSensorDevice.getName(), String.valueOf(currentEnvironmentData.getHumidity()));
             environmentDataList.add(environmentDataDto);
+
             //smoke level
             String smokeLevel = String.valueOf(currentEnvironmentData.getSmokeLevel() == null ? "NA" : currentEnvironmentData.getSmokeLevel());
             environmentDataDto = new EnvironmentDataDto(currentEnvironmentData.getTimestamp().toString(), environmentSensorDevice.getName(), smokeLevel);
@@ -125,18 +126,46 @@ public class EnvironmentSensorDeviceService {
         //get the average data
         List<EnvironmentData> findAllEnvironmentDataOfToday = environmentDataRepository.findByTimestampBetween(initialLocalDateTime, actualLocalDatetime);
 
-        //Average of the temperature
-        EnvironmentDataDto environmentDataMeanDto = new EnvironmentDataDto(actualLocalDatetime.toString(), "Média da Temperatura (Hoje)", "NA");
-        environmentDataList.add(environmentDataMeanDto);
-
-        //Average of the Humidity
-        environmentDataMeanDto = new EnvironmentDataDto(actualLocalDatetime.toString(), "Média da Humidade (Hoje)", "NA");
-        environmentDataList.add(environmentDataMeanDto);
-
-        //Average of the Humidity
-        environmentDataMeanDto = new EnvironmentDataDto(actualLocalDatetime.toString(), "Média do Nível de Fumo (Hoje)", "NA");
-        environmentDataList.add(environmentDataMeanDto);
+        processMeans(findAllEnvironmentDataOfToday, environmentDataList, actualLocalDatetime);
 
         return environmentDataList;
+    }
+
+    private void processMeans(List<EnvironmentData> findAllEnvironmentDataOfToday, List<EnvironmentDataDto> environmentDataList, LocalDateTime actualLocalDatetime) {
+
+        float temperatureMean = 0, humidityMean = 0, smokeLevelMean = 0;
+
+        int totalTemperatureRecords = 0;
+        int totalHumidityRecords = 0;
+        int totalSmokeLevelRecords = 0;
+
+        for(EnvironmentData environmentData : findAllEnvironmentDataOfToday) {
+
+            temperatureMean += environmentData.getTemperature();
+            totalTemperatureRecords++;
+
+            humidityMean += environmentData.getHumidity();
+            totalHumidityRecords++;
+
+            if(environmentData.getSmokeLevel() != null) {
+                smokeLevelMean += environmentData.getSmokeLevel();
+                totalSmokeLevelRecords++;
+            }
+        }
+
+        temperatureMean = temperatureMean / totalTemperatureRecords;
+        humidityMean = humidityMean / totalHumidityRecords;
+        smokeLevelMean = smokeLevelMean / totalSmokeLevelRecords;
+
+        //Average of the temperature
+        EnvironmentDataDto environmentDataMeanDto = new EnvironmentDataDto(actualLocalDatetime.toString(), "Média da Temperatura (Hoje)", String.valueOf(Math.round(temperatureMean)));
+        environmentDataList.add(environmentDataMeanDto);
+        //Average of the Humidity
+        environmentDataMeanDto = new EnvironmentDataDto(actualLocalDatetime.toString(), "Média da Humidade (Hoje)",  String.valueOf(Math.round(humidityMean)));
+        environmentDataList.add(environmentDataMeanDto);
+
+        //Average of the Humidity
+        environmentDataMeanDto = new EnvironmentDataDto(actualLocalDatetime.toString(), "Média do Nível de Fumo (Hoje)",  String.valueOf(Math.round(smokeLevelMean)));
+        environmentDataList.add(environmentDataMeanDto);
     }
 }

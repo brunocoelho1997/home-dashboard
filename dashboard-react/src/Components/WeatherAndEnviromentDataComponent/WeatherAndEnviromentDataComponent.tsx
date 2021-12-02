@@ -6,6 +6,7 @@ import { IEnvironmentDataDto } from '../../Logic/Interfaces';
 import DatetimeComponent from '../DatetimeComponent/DatetimeComponent';
 import WeatherComponent from '../WeatherComponent/WeatherComponent';
 import { BASE_URL, GET_CURRENT_ENVIRONMENT_DATA_ENDPOINT } from '../../Logic/Constants';
+import ChartEnviromentDataComponent from '../ChartEnviromentDataComponent/ChartEnviromentDataComponent';
 
 
 const axiosClient = axios.create({
@@ -67,8 +68,8 @@ function WeatherAndEnviromentDataComponent() {
       </div>
 
       <div className="row">
-        <div className="col-sm-12">
-          ads
+        <div className="col-12 mt-2 px-4">
+          <ChartEnviromentDataComponent />
         </div>
       </div>
 

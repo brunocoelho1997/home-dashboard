@@ -42,3 +42,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.border-tests-red {
+  border-style: solid;
+  border-color: red;
+}
+
+.border-tests-blue {
+  border-style: solid;
+  border-color: blue;
+}

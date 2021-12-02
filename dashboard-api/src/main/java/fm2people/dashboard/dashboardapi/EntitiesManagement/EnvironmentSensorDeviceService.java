@@ -83,31 +83,30 @@ public class EnvironmentSensorDeviceService {
                     .orElse(null);
 
             if (currentEnvironmentData == null) {
-                environmentDataDto.setName(environmentSensorDevice.getName());
-                environmentDataDto.setTimestamp("-");
-                environmentDataDto.setSensorData("NA");
-
                 //temperature
+                environmentDataDto = new EnvironmentDataDto("-", environmentSensorDevice.getName() + "- Temperatura", "NA");
                 environmentDataList.add(environmentDataDto);
                 //humidity
+                environmentDataDto = new EnvironmentDataDto("-", environmentSensorDevice.getName() + "- Humidade", "NA");
                 environmentDataList.add(environmentDataDto);
                 //smoke level
+                environmentDataDto = new EnvironmentDataDto("-", environmentSensorDevice.getName() + "- Nível de Fumo", "NA");
                 environmentDataList.add(environmentDataDto);
 
                 continue;
             }
 
             //temperature
-            environmentDataDto = new EnvironmentDataDto(currentEnvironmentData.getTimestamp().toString(), environmentSensorDevice.getName(), String.valueOf(currentEnvironmentData.getTemperature()));
+            environmentDataDto = new EnvironmentDataDto(currentEnvironmentData.getTimestamp().toString(), environmentSensorDevice.getName() + "- Temperatura", String.valueOf(Math.round(currentEnvironmentData.getTemperature())) + "ºC");
             environmentDataList.add(environmentDataDto);
 
             //humidity
-            environmentDataDto = new EnvironmentDataDto(currentEnvironmentData.getTimestamp().toString(), environmentSensorDevice.getName(), String.valueOf(currentEnvironmentData.getHumidity()));
+            environmentDataDto = new EnvironmentDataDto(currentEnvironmentData.getTimestamp().toString(), environmentSensorDevice.getName() + "- Humidade", String.valueOf(Math.round(currentEnvironmentData.getHumidity())) + "%");
             environmentDataList.add(environmentDataDto);
 
             //smoke level
-            String smokeLevel = String.valueOf(currentEnvironmentData.getSmokeLevel() == null ? "NA" : currentEnvironmentData.getSmokeLevel());
-            environmentDataDto = new EnvironmentDataDto(currentEnvironmentData.getTimestamp().toString(), environmentSensorDevice.getName(), smokeLevel);
+            String smokeLevel = String.valueOf(currentEnvironmentData.getSmokeLevel() == null ? "NA" : Math.round(currentEnvironmentData.getSmokeLevel()) + "%");
+            environmentDataDto = new EnvironmentDataDto(currentEnvironmentData.getTimestamp().toString(), environmentSensorDevice.getName() + "- Nível de Fumo", smokeLevel);
             environmentDataList.add(environmentDataDto);
 
         }
@@ -158,14 +157,14 @@ public class EnvironmentSensorDeviceService {
         smokeLevelMean = smokeLevelMean / totalSmokeLevelRecords;
 
         //Average of the temperature
-        EnvironmentDataDto environmentDataMeanDto = new EnvironmentDataDto(actualLocalDatetime.toString(), "Média da Temperatura (Hoje)", String.valueOf(Math.round(temperatureMean)));
+        EnvironmentDataDto environmentDataMeanDto = new EnvironmentDataDto(actualLocalDatetime.toString(), "Média da Temperatura (Hoje)", String.valueOf(Math.round(temperatureMean)) + "ºC");
         environmentDataList.add(environmentDataMeanDto);
         //Average of the Humidity
-        environmentDataMeanDto = new EnvironmentDataDto(actualLocalDatetime.toString(), "Média da Humidade (Hoje)",  String.valueOf(Math.round(humidityMean)));
+        environmentDataMeanDto = new EnvironmentDataDto(actualLocalDatetime.toString(), "Média da Humidade (Hoje)",  String.valueOf(Math.round(humidityMean))+ "%");
         environmentDataList.add(environmentDataMeanDto);
 
         //Average of the Humidity
-        environmentDataMeanDto = new EnvironmentDataDto(actualLocalDatetime.toString(), "Média do Nível de Fumo (Hoje)",  String.valueOf(Math.round(smokeLevelMean)));
+        environmentDataMeanDto = new EnvironmentDataDto(actualLocalDatetime.toString(), "Média do Nível de Fumo (Hoje)",  String.valueOf(Math.round(smokeLevelMean))+ "%");
         environmentDataList.add(environmentDataMeanDto);
     }
 }

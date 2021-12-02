@@ -66,6 +66,13 @@ function WeatherAndEnviromentDataComponent() {
         </div>
       </div>
 
+      <div className="row">
+        <div className="col-sm-12">
+          ads
+        </div>
+      </div>
+
+
     </div>
   );
 }

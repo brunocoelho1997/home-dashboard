@@ -6,8 +6,8 @@ import { BASE_URL_IPA, GET_CURRENT_WEATHER_IPMA_ENDPOINT } from '../../Logic/Con
 
 export interface IWeatherDataDto {
   idWeatherType: number;
-  tMin: String;
-  tMax: String;
+  tMin: number;
+  tMax: number;
   precipitaProb: String;
 }
 
@@ -39,7 +39,7 @@ function WeatherComponent() {
         <div className="mt-2">
           {getWeatherIcon(weatherData[0]?.idWeatherType)}
         </div>
-        <p className="mt-2"> {weatherData[0]?.tMin}ºC / {weatherData[0]?.tMax}ºC</p>
+        <p className="mt-2"> {Math.round(weatherData[0]?.tMin)}ºC / {Math.round(weatherData[0]?.tMax)}ºC</p>
         <div className="mt-2"> {getRainProbabilityDiv(+weatherData[0]?.precipitaProb)}</div>
         
         <hr className="my-4" />
@@ -48,7 +48,7 @@ function WeatherComponent() {
         <div className="mt-2">
           {getWeatherIcon(weatherData[1]?.idWeatherType)}
         </div>
-        <p className="mt-2"> {weatherData[1]?.tMin}ºC / {weatherData[1]?.tMax}ºC</p>
+        <p className="mt-2"> {Math.round(weatherData[1]?.tMin)}ºC / {Math.round(weatherData[1]?.tMax)}ºC</p>
         <div className="mt-2"> {getRainProbabilityDiv(+weatherData[1]?.precipitaProb)} </div>
         
       </div>

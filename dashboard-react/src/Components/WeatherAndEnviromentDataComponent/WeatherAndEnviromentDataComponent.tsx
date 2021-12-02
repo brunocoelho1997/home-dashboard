@@ -57,7 +57,7 @@ function WeatherAndEnviromentDataComponent() {
             <div className="row">
               {environmentData.map((environmentDataEntry, i) => {     
                 return (
-                  <div className="col-4 p-1">
+                  <div className="col-md-4 p-1">
                     <EnviromentDataComponent environmentDataDto={environmentDataEntry} />
                   </div>
                 ) 

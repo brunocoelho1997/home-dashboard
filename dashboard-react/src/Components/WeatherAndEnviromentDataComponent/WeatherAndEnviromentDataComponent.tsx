@@ -8,7 +8,7 @@ import WeatherComponent from '../WeatherComponent/WeatherComponent';
 import { BASE_URL, GET_CURRENT_ENVIRONMENT_DATA_ENDPOINT } from '../../Logic/Constants';
 
 
-const client = axios.create({
+const axiosClient = axios.create({
   baseURL: BASE_URL 
 });
 
@@ -20,7 +20,7 @@ function WeatherAndEnviromentDataComponent() {
   useEffect(() => {
  
     async function getCurrentEnvironmentData() {
-      const response = await client.get<IEnvironmentDataDto[]>(GET_CURRENT_ENVIRONMENT_DATA_ENDPOINT).then(response => {
+      const response = await axiosClient.get<IEnvironmentDataDto[]>(GET_CURRENT_ENVIRONMENT_DATA_ENDPOINT).then(response => {
         console.log(response.data);
         setEnvironmentData( response.data );
       });

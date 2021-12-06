@@ -64,7 +64,9 @@ function WeatherAndEnviromentDataComponent() {
               })}
             </div>
             <div className="row mt-2">
-              <ChartEnviromentDataComponent />
+              <div className="col-md-12">
+                <ChartEnviromentDataComponent />
+              </div>
             </div>
           </div>
         </div>

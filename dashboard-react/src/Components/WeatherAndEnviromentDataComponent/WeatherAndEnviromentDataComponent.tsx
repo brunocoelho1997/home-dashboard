@@ -54,7 +54,7 @@ function WeatherAndEnviromentDataComponent() {
         </div>
         <div className="col-sm-8">
           <div className="container-fluid">
-            <div className="row">
+            <div className="row mt-5">
               {environmentData.map((environmentDataEntry, i) => {     
                 return (
                   <div className="col-md-4 p-1">

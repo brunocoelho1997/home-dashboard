@@ -12,14 +12,18 @@ SoftwareSerial esp(2,3);
 #define DEVICE_UUID "7405707937"
 #define dht_apin A0 // Analog Pin sensor is connected to
 
+int smokeA0 = A1; // Smoke Level Analog Pin sensor is connected to
+
 dht DHT;
 
 int error;
 float temp;
 float humidity;  
+int smokeLevel;
 
 void setup()
 { 
+  pinMode(smokeA0, INPUT);
   Serial.begin(9600);
   esp.begin(9600);
   
@@ -45,6 +49,7 @@ void loop()
   DHT.read11(dht_apin);
   temp = DHT.temperature;
   humidity = DHT.humidity;
+  smokeLevel = analogRead(smokeA0);
   
   start: //label 
   error=0;
@@ -75,7 +80,9 @@ void updatedata(){
   command += "&temperature=";
   command += temp;
   command += "&humidity=";   
-  command += temp + 5;
+  command += humidity;
+  command += "&smokeLevel=";   
+  command += smokeLevel;
   command += "\r\n";
   
   Serial.print("AT+CIPSEND=");

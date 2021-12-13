@@ -1,25 +1,27 @@
 #include <SoftwareSerial.h>
 #include "Secrets.h"
+#include "dht.h"
 
 SoftwareSerial esp(2,3);
- 
+
 #define DEBUG true 
 //#define IP "192.168.1.91" //dashboard-api IP - local
 #define IP "192.168.1.72" //dashboard-api IP - bs-worker
 #define PORT "8080" //dashboard-api IP
 #define SEND_DATA_ENDPOINT "/devices/sendData"
 #define DEVICE_UUID "7405707937"
+#define dht_apin A0 // Analog Pin sensor is connected to
+
+dht DHT;
 
 int error;
-const int sensor_pin = A0;
-float temp;  
-float output;  
+float temp;
+float humidity;  
 
 void setup()
 { 
   Serial.begin(9600);
   esp.begin(9600);
-  pinMode(sensor_pin,INPUT);
   
   send_command("AT+RST\r\n", 2000, DEBUG); //reset module
   send_command("AT+CWMODE=1\r\n", 1000, DEBUG); //set station mode
@@ -39,14 +41,18 @@ void setup()
 
 void loop()
 {
-  output=analogRead(sensor_pin);
-  temp =(output*500)/1023;
+
+  DHT.read11(dht_apin);
+  temp = DHT.temperature;
+  humidity = DHT.humidity;
+  
   start: //label 
   error=0;
   updatedata();
   if (error==1){
     goto start; //go to label "start"
   }
+
   delay(60000);
 }
 

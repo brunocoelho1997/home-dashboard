@@ -44,10 +44,19 @@ public class EnvironmentSensorDeviceService {
         environmentData.setHumidity(Float.parseFloat(humidity));
         environmentData.setTemperature(Float.parseFloat(temperature));
         environmentData.setEnvironmentSensorDevice(environmentSensorDevice);
-        environmentData.setSmokeLevel(smokeLevel == null? null: Float.parseFloat(smokeLevel));
+        environmentData.setSmokeLevel(smokeLevel == null? null: getProcessedSmokeLevel(Float.parseFloat(smokeLevel)));
         environmentData.setTimestamp(LocalDateTime.now());
 
         environmentDataRepository.save(environmentData);
+
+    }
+
+    private Float getProcessedSmokeLevel(float smokeLevelUnprocessed) {
+
+        //according to the documentation, when we have the smokeLevelUnprocessed equal 400, we have smoke!
+        //so, will be considered 400 as 90%!
+
+        return smokeLevelUnprocessed * 90 / 400;
 
     }
 
@@ -66,7 +75,12 @@ public class EnvironmentSensorDeviceService {
 
         List<EnvironmentDataDto> environmentDataList = new ArrayList<>();
 
-        environmentDataList.addAll(getMeans());
+        LocalDateTime actualLocalDatetime = LocalDateTime.now();
+        //get 00:00h of actual date
+        LocalDateTime initialLocalDateTime = LocalDateTime.of(actualLocalDatetime.getYear(), actualLocalDatetime.getMonth(), actualLocalDatetime.getDayOfMonth(),0,0);
+
+
+        environmentDataList.addAll(getMeans(initialLocalDateTime, actualLocalDatetime));
 
         //get the current data
         for(EnvironmentSensorDevice environmentSensorDevice : environmentSensorDevices) {
@@ -114,23 +128,23 @@ public class EnvironmentSensorDeviceService {
         return environmentDataList;
     }
 
-    private Collection<? extends EnvironmentDataDto> getMeans() {
+    private Collection<? extends EnvironmentDataDto> getMeans(LocalDateTime initialLocalDateTime, LocalDateTime finalLocalDatetime) {
 
         List<EnvironmentDataDto> environmentDataList = new ArrayList<>();
 
-        LocalDateTime actualLocalDatetime = LocalDateTime.now();
+        /*LocalDateTime actualLocalDatetime = LocalDateTime.now();
         //get 00:00h of actual date
         LocalDateTime initialLocalDateTime = LocalDateTime.of(actualLocalDatetime.getYear(), actualLocalDatetime.getMonth(), actualLocalDatetime.getDayOfMonth(),0,0);
-
+*/
         //get the average data
-        List<EnvironmentData> findAllEnvironmentDataOfToday = environmentDataRepository.findByTimestampBetween(initialLocalDateTime, actualLocalDatetime);
+        List<EnvironmentData> findAllEnvironmentDataOfToday = environmentDataRepository.findByTimestampBetween(initialLocalDateTime, finalLocalDatetime);
 
-        processMeans(findAllEnvironmentDataOfToday, environmentDataList, actualLocalDatetime);
+        processMeans(findAllEnvironmentDataOfToday, environmentDataList, finalLocalDatetime, true);
 
         return environmentDataList;
     }
 
-    private void processMeans(List<EnvironmentData> findAllEnvironmentDataOfToday, List<EnvironmentDataDto> environmentDataList, LocalDateTime actualLocalDatetime) {
+    private void processMeans(List<EnvironmentData> findAllEnvironmentDataOfToday, List<EnvironmentDataDto> environmentDataList, LocalDateTime actualLocalDatetime, boolean addLegend) {
 
         float temperatureMean = 0, humidityMean = 0, smokeLevelMean = 0;
 
@@ -157,14 +171,41 @@ public class EnvironmentSensorDeviceService {
         smokeLevelMean = smokeLevelMean / totalSmokeLevelRecords;
 
         //Average of the temperature
-        EnvironmentDataDto environmentDataMeanDto = new EnvironmentDataDto(actualLocalDatetime.toString(), "Média da Temperatura (Hoje)", String.valueOf(Math.round(temperatureMean)) + "ºC");
+        EnvironmentDataDto environmentDataMeanDto = new EnvironmentDataDto(actualLocalDatetime.toString(), "Média da Temperatura (Hoje)", String.valueOf(Math.round(temperatureMean)) + (addLegend? "ºC" : ""));
         environmentDataList.add(environmentDataMeanDto);
         //Average of the Humidity
-        environmentDataMeanDto = new EnvironmentDataDto(actualLocalDatetime.toString(), "Média da Humidade (Hoje)",  String.valueOf(Math.round(humidityMean))+ "%");
+        environmentDataMeanDto = new EnvironmentDataDto(actualLocalDatetime.toString(), "Média da Humidade (Hoje)",  String.valueOf(Math.round(humidityMean))+ (addLegend ? "%" : ""));
         environmentDataList.add(environmentDataMeanDto);
 
         //Average of the Humidity
-        environmentDataMeanDto = new EnvironmentDataDto(actualLocalDatetime.toString(), "Média do Nível de Fumo (Hoje)",  String.valueOf(Math.round(smokeLevelMean))+ "%");
+        environmentDataMeanDto = new EnvironmentDataDto(actualLocalDatetime.toString(), "Média do Nível de Fumo (Hoje)",  String.valueOf(Math.round(smokeLevelMean))+ (addLegend ? "%" : ""));
         environmentDataList.add(environmentDataMeanDto);
+    }
+
+    public List<EnvironmentDataDto> getEnvironmentDataFromDay() {
+
+        LocalDateTime actualLocalDatetime = LocalDateTime.now();
+        List<LocalDateTime> periods = new ArrayList<>();
+        periods.add(LocalDateTime.of(actualLocalDatetime.getYear(), actualLocalDatetime.getMonth(), actualLocalDatetime.getDayOfMonth(),4,0));
+        periods.add(LocalDateTime.of(actualLocalDatetime.getYear(), actualLocalDatetime.getMonth(), actualLocalDatetime.getDayOfMonth(),8,0));
+        periods.add(LocalDateTime.of(actualLocalDatetime.getYear(), actualLocalDatetime.getMonth(), actualLocalDatetime.getDayOfMonth(),12,0));
+        periods.add(LocalDateTime.of(actualLocalDatetime.getYear(), actualLocalDatetime.getMonth(), actualLocalDatetime.getDayOfMonth(),16,0));
+        periods.add(LocalDateTime.of(actualLocalDatetime.getYear(), actualLocalDatetime.getMonth(), actualLocalDatetime.getDayOfMonth(),20,0));
+        periods.add(LocalDateTime.of(actualLocalDatetime.getYear(), actualLocalDatetime.getMonth(), actualLocalDatetime.getDayOfMonth(),23,59));
+
+        List<EnvironmentDataDto> environmentDataList = new ArrayList<>();
+
+        for(LocalDateTime period : periods) {
+
+            LocalDateTime periodMinusFourHours = LocalDateTime.of(period.getYear(), period.getMonth(), period.getDayOfMonth(), period.getHour() - 4, 0);
+
+            List<EnvironmentData> findAllEnvironmentDataOfToday = environmentDataRepository.findByTimestampBetween(periodMinusFourHours, period);
+
+            //it's possible to use this function since wouldn't be used the Environment data name
+            processMeans(findAllEnvironmentDataOfToday, environmentDataList, periodMinusFourHours, false);
+
+        }
+
+        return environmentDataList;
     }
 }

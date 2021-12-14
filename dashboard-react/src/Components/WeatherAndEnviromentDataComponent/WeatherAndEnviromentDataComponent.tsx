@@ -5,7 +5,7 @@ import './WeatherAndEnviromentDataComponent.css';
 import { IEnvironmentDataDto } from '../../Logic/Interfaces';
 import DatetimeComponent from '../DatetimeComponent/DatetimeComponent';
 import WeatherComponent from '../WeatherComponent/WeatherComponent';
-import { BASE_URL, GET_CURRENT_ENVIRONMENT_DATA_ENDPOINT } from '../../Logic/Constants';
+import { BASE_URL, GET_CURRENT_ENVIRONMENT_DATA_ENDPOINT, GET_ENVIRONMENT_DATA_FROM_DAY_ENDPOINT } from '../../Logic/Constants';
 import ChartEnviromentDataComponent from '../ChartEnviromentDataComponent/ChartEnviromentDataComponent';
 
 
@@ -17,6 +17,7 @@ const axiosClient = axios.create({
 function WeatherAndEnviromentDataComponent() {
 
   const [environmentData, setEnvironmentData] = React.useState<IEnvironmentDataDto[]>([]);
+  const [environmentDataFromDay, setEnvironmentDataFromDay] = React.useState<IEnvironmentDataDto[]>([]);
   
   useEffect(() => {
  
@@ -27,6 +28,14 @@ function WeatherAndEnviromentDataComponent() {
       });
     }
     getCurrentEnvironmentData();
+
+    async function getEnvironmentDataFromDay() {
+      const response = await axiosClient.get<IEnvironmentDataDto[]>(GET_ENVIRONMENT_DATA_FROM_DAY_ENDPOINT).then(response => {
+        console.log(response.data);
+        setEnvironmentDataFromDay( response.data );
+      });
+    }
+    getEnvironmentDataFromDay();
     
   }, []);
 
@@ -65,7 +74,7 @@ function WeatherAndEnviromentDataComponent() {
             </div>
             <div className="row mt-2">
               <div className="col-md-12">
-                <ChartEnviromentDataComponent />
+                <ChartEnviromentDataComponent environmentDataDto={environmentDataFromDay}/>
               </div>
             </div>
           </div>

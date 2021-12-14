@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import './ChartEnviromentDataComponent.css';
 
 import {
@@ -13,6 +13,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import faker from 'faker';
+import { IEnvironmentDataDto } from '../../Logic/Interfaces';
 
 ChartJS.register(
   CategoryScale,
@@ -39,20 +40,20 @@ export const options = {
   },
 };
 
-const labels = ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'];
+const labels = ['04:00', '08:00', '12:00', '16:00', '20:00', '24:00'];
 
-export const data = {
+const data = {
   labels,
   datasets: [
     {
       label: 'Temperatura',
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 40 })),
+      data: labels.map(() => 0),
       borderColor: 'rgb(220, 53, 69)',
       backgroundColor: 'rgba(220, 53, 69, 0.5)',
     },
     {
       label: 'Humidade',
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 100 })),
+      data: labels.map(() => 0),
       borderColor: 'rgb(0, 123, 255)',
       backgroundColor: 'rgba(0, 123, 255, 0.5)',
     },
@@ -65,20 +66,44 @@ export const data = {
   ],
 };
 
+type ChartEnviromentDataComponentProps = {
+  environmentDataDto: IEnvironmentDataDto[]
+}
+class ChartEnviromentDataComponent extends Component<ChartEnviromentDataComponentProps> {
+  
 
-function ChartEnviromentDataComponent() {
+  componentDidUpdate() {
+    for (let i = 0; i < data.labels.length; i++) {
+      console.log ("temp: " + data.labels[i] + "-" + this.props.environmentDataDto[i*3]?.sensorData);
+      
+      let humidityIndex = i == 0 ? 1 : i * 3 + 1;
+      let smokeLevelIndex = i == 0 ? 2 : i * 3 + 2;
+      
 
-  return (
-    <div className="container-fluid text-white default-component mb-5">
-    
-      <div className="default-component-card environment-data-chart-day">
-        
-        <Line options={options} data={data} />
+      console.log ("humidity: " + data.labels[i] + "-" + this.props.environmentDataDto[humidityIndex]?.sensorData);
+      console.log ("smokeLevel: " + data.labels[i] + "-" + this.props.environmentDataDto[smokeLevelIndex]?.sensorData);
+      
+      data.datasets[0].data[i] = +this.props.environmentDataDto[i*3]?.sensorData;
+      data.datasets[1].data[i] = +this.props.environmentDataDto[humidityIndex]?.sensorData;
+      data.datasets[2].data[i] = +this.props.environmentDataDto[smokeLevelIndex]?.sensorData;
+
+    }
+
+  }
+  
+  render() {
+    return (
+      <div className="container-fluid text-white default-component mb-5">
+      
+        <div className="default-component-card environment-data-chart-day">
+          
+          <Line options={options} data={data} />
+
+        </div>
 
       </div>
-
-    </div>
-  );
+    );
+  }
 }
 
 export default ChartEnviromentDataComponent;

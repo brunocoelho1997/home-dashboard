@@ -50,4 +50,16 @@ public class DeviceController {
 
     }
 
+    /*
+    Get data to be used in daily chart (will return the temperature from 00:00h, 04:00h, 08:00h, etc)
+     */
+    @RequestMapping("/getEnvironmentDataFromDay")
+    public List<EnvironmentDataDto> getEnvironmentDataFromDay() {
+
+        log.info("Was requested for current environment data.");
+
+        return environmentSensorDeviceService.getEnvironmentDataFromDay();
+
+    }
+
 }

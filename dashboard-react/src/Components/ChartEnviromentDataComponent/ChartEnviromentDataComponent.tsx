@@ -59,7 +59,7 @@ const data = {
     },
     {
       label: 'Fumo',
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 100 })),
+      data: labels.map(() => 0),
       borderColor: 'rgb(255, 193, 7)',
       backgroundColor: 'rgba(255, 193, 7, 0.5)',
     }

@@ -1,0 +1,11 @@
+
+.environment-data-chart-day {
+    min-height: 20em;
+}
+
+
+@media screen and (max-width: 768px) {
+    .environment-data-chart-day {
+        min-height: 20em;
+    }
+}

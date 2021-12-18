@@ -1,5 +1,5 @@
-import React, { Component, useEffect } from 'react';
-import './ChartEnviromentDataComponent.css';
+import React, { useEffect } from 'react';
+import './DayChartEnviromentDataComponent.css';
 
 import {
   Chart as ChartJS,
@@ -12,7 +12,6 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import faker from 'faker';
 import { IEnvironmentDataDto } from '../../Logic/Interfaces';
 import axios from 'axios';
 import { BASE_URL, GET_ENVIRONMENT_DATA_FROM_DAY_ENDPOINT } from '../../Logic/Constants';
@@ -48,7 +47,7 @@ const axiosClient = axios.create({
   baseURL: BASE_URL 
 });
 
-function ChartEnviromentDataComponent() {
+function DayChartEnviromentDataComponent() {
   
   const [data, setData] = React.useState<any>(null);
   
@@ -97,8 +96,10 @@ function ChartEnviromentDataComponent() {
           data.datasets[1].data[i] = +response.data[humidityIndex]?.sensorData;
           data.datasets[2].data[i] = +response.data[smokeLevelIndex]?.sensorData;
 
-          setData(data);    
         }
+
+        setData(data);
+
       });
     }
     getEnvironmentDataFromDay();
@@ -106,15 +107,11 @@ function ChartEnviromentDataComponent() {
   
   return (
     <div className="container-fluid text-white default-component mb-5">
-    
       <div className="default-component-card environment-data-chart-day">
-        
-      {data ? <Line options={options} data={data} /> : "Not loaded yet"} 
-
+        {data ? <Line options={options} data={data} /> : "Not loaded yet"} 
       </div>
-
     </div>
   );
 }
 
-export default ChartEnviromentDataComponent;
+export default DayChartEnviromentDataComponent;

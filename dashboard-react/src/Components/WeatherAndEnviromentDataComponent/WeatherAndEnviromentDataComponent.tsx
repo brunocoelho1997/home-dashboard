@@ -6,7 +6,8 @@ import { IEnvironmentDataDto } from '../../Logic/Interfaces';
 import DatetimeComponent from '../DatetimeComponent/DatetimeComponent';
 import WeatherComponent from '../WeatherComponent/WeatherComponent';
 import { BASE_URL, GET_CURRENT_ENVIRONMENT_DATA_ENDPOINT, GET_ENVIRONMENT_DATA_FROM_DAY_ENDPOINT } from '../../Logic/Constants';
-import ChartEnviromentDataComponent from '../ChartEnviromentDataComponent/ChartEnviromentDataComponent';
+import DayChartEnviromentDataComponent from '../DayChartEnviromentDataComponent/DayChartEnviromentDataComponent';
+import WeekChartEnviromentDataComponent from '../WeekChartEnviromentDataComponent copy/WeekChartEnviromentDataComponent';
 
 
 const axiosClient = axios.create({
@@ -57,7 +58,7 @@ function WeatherAndEnviromentDataComponent() {
             <div className="row">
               {environmentData.map((environmentDataEntry, i) => {     
                 return (
-                  <div className="col-md-4 p-1">
+                  <div className="col-md-4 p-1" key={i}>
                     <EnviromentDataComponent environmentDataDto={environmentDataEntry} />
                   </div>
                 ) 
@@ -65,7 +66,12 @@ function WeatherAndEnviromentDataComponent() {
             </div>
             <div className="row mt-2">
               <div className="col-md-12">
-                <ChartEnviromentDataComponent />
+                <DayChartEnviromentDataComponent />
+              </div>
+            </div>
+            <div className="row mt-2">
+              <div className="col-md-12">
+                <WeekChartEnviromentDataComponent />
               </div>
             </div>
           </div>

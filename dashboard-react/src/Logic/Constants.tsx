@@ -4,6 +4,7 @@ export const PORT = "8080";
 export const BASE_URL = "http://" + IP + ":" + PORT;
 export const GET_CURRENT_ENVIRONMENT_DATA_ENDPOINT = "/devices/getCurrentEnvironmentData"
 export const GET_ENVIRONMENT_DATA_FROM_DAY_ENDPOINT = "/devices/getEnvironmentDataFromDay"
+export const GET_ENVIRONMENT_DATA_FROM_WEEK_ENDPOINT = "/devices/getEnvironmentDataFromWeek"
 
 
 export const BASE_URL_IPA = "https://api.ipma.pt";

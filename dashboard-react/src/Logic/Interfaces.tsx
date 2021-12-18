@@ -1,5 +1,5 @@
 export interface IEnvironmentDataDto {
-  timestamp: String;
+  timestamp: string;
   name: String;
   sensorData: String;
 }

@@ -17,7 +17,6 @@ const axiosClient = axios.create({
 function WeatherAndEnviromentDataComponent() {
 
   const [environmentData, setEnvironmentData] = React.useState<IEnvironmentDataDto[]>([]);
-  const [environmentDataFromDay, setEnvironmentDataFromDay] = React.useState<IEnvironmentDataDto[]>([]);
   
   useEffect(() => {
  
@@ -28,14 +27,6 @@ function WeatherAndEnviromentDataComponent() {
       });
     }
     getCurrentEnvironmentData();
-
-    async function getEnvironmentDataFromDay() {
-      const response = await axiosClient.get<IEnvironmentDataDto[]>(GET_ENVIRONMENT_DATA_FROM_DAY_ENDPOINT).then(response => {
-        console.log(response.data);
-        setEnvironmentDataFromDay( response.data );
-      });
-    }
-    getEnvironmentDataFromDay();
     
   }, []);
 
@@ -74,7 +65,7 @@ function WeatherAndEnviromentDataComponent() {
             </div>
             <div className="row mt-2">
               <div className="col-md-12">
-                <ChartEnviromentDataComponent environmentDataDto={environmentDataFromDay}/>
+                <ChartEnviromentDataComponent />
               </div>
             </div>
           </div>

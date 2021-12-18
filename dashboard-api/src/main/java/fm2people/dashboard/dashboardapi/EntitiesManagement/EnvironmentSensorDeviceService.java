@@ -214,4 +214,34 @@ public class EnvironmentSensorDeviceService {
 
         return environmentDataList;
     }
+
+    public List<EnvironmentDataDto> getEnvironmentDataFromWeek() {
+
+        LocalDateTime actualLocalDatetime = LocalDateTime.now();
+        List<LocalDateTime> periods = new ArrayList<>();
+
+
+        periods.add(LocalDateTime.of(actualLocalDatetime.getYear(), actualLocalDatetime.getMonth(), actualLocalDatetime.getDayOfMonth(),23, 59).minusDays(6));
+        periods.add(LocalDateTime.of(actualLocalDatetime.getYear(), actualLocalDatetime.getMonth(), actualLocalDatetime.getDayOfMonth(),23, 59).minusDays(5));
+        periods.add(LocalDateTime.of(actualLocalDatetime.getYear(), actualLocalDatetime.getMonth(), actualLocalDatetime.getDayOfMonth(),23, 59).minusDays(4));
+        periods.add(LocalDateTime.of(actualLocalDatetime.getYear(), actualLocalDatetime.getMonth(), actualLocalDatetime.getDayOfMonth(),23, 59).minusDays(3));
+        periods.add(LocalDateTime.of(actualLocalDatetime.getYear(), actualLocalDatetime.getMonth(), actualLocalDatetime.getDayOfMonth(),23, 59).minusDays(2));
+        periods.add(LocalDateTime.of(actualLocalDatetime.getYear(), actualLocalDatetime.getMonth(), actualLocalDatetime.getDayOfMonth(),23, 59).minusDays(1));
+        periods.add(LocalDateTime.of(actualLocalDatetime.getYear(), actualLocalDatetime.getMonth(), actualLocalDatetime.getDayOfMonth(),23, 59));
+
+        List<EnvironmentDataDto> environmentDataList = new ArrayList<>();
+
+        for(LocalDateTime period : periods) {
+
+            LocalDateTime periodMinusFourHours = LocalDateTime.of(period.getYear(), period.getMonth(), period.getDayOfMonth(), 0, 0);
+
+            List<EnvironmentData> findAllEnvironmentDataOfToday = environmentDataRepository.findByTimestampBetween(periodMinusFourHours, period);
+
+            //it's possible to use this function since wouldn't be used the Environment data name
+            processMeans(findAllEnvironmentDataOfToday, environmentDataList, periodMinusFourHours, false);
+
+        }
+
+        return environmentDataList;
+    }
 }

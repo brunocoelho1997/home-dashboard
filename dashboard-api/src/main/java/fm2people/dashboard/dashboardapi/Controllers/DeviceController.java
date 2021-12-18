@@ -51,14 +51,26 @@ public class DeviceController {
     }
 
     /*
-    Get data to be used in daily chart (will return the temperature from 00:00h, 04:00h, 08:00h, etc)
+    Get data to be used in daily chart (will return the temperature/humidity/smoke level from 00:00h, 04:00h, 08:00h, etc)
      */
     @RequestMapping("/getEnvironmentDataFromDay")
     public List<EnvironmentDataDto> getEnvironmentDataFromDay() {
 
-        log.info("Was requested for current environment data.");
+        log.info("Was requested today's environment data.");
 
         return environmentSensorDeviceService.getEnvironmentDataFromDay();
+
+    }
+
+    /*
+    Get data to be used in weekly chart (will return the temperature/humidity/smoke level from monday, tuesday, etc)
+     */
+    @RequestMapping("/getEnvironmentDataFromWeek")
+    public List<EnvironmentDataDto> getEnvironmentDataFromWeek() {
+
+        log.info("Was requested week's environment data.");
+
+        return environmentSensorDeviceService.getEnvironmentDataFromWeek();
 
     }
 

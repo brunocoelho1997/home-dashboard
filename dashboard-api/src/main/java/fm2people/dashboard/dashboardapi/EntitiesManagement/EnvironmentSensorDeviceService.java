@@ -34,6 +34,12 @@ public class EnvironmentSensorDeviceService {
         environmentSensorDevice.setDeviceUuid(uuid);
         environmentSensorDevice.setDataHistory(new ArrayList<>());
         environmentSensorDeviceRepository.save(environmentSensorDevice);
+
+    }
+
+    public boolean alreadyExistDevices() {
+        List<EnvironmentSensorDevice> all = environmentSensorDeviceRepository.findAll();
+        return !all.isEmpty();
     }
 
     public void addData(String uuid, String temperature, String humidity, String smokeLevel) {

@@ -17,13 +17,20 @@ public class StartupApplicationListener implements ApplicationListener<ContextRe
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        log.info("Will load all environment sensor data.");
 
-        //environmentSensorDeviceService.addEnvironmentSensorData("Sensor Sala", RoomEnum.LIVING_ROOM, "7405707937");
+        if(!environmentSensorDeviceService.alreadyExistDevices()) {
+            log.info("Will load all environment sensor data.");
 
-        //environmentSensorDeviceService.addEnvironmentSensorData("Sensor Cozinha", RoomEnum.KITCHEN, "1435707937");
+            environmentSensorDeviceService.addEnvironmentSensorData("Sensor Sala", RoomEnum.LIVING_ROOM, "7405707937");
 
-        log.info("Loaded all environment sensor data.");
+            environmentSensorDeviceService.addEnvironmentSensorData("Sensor Cozinha", RoomEnum.KITCHEN, "1435707937");
+
+            log.info("Loaded all environment sensor data.");
+
+        }
+
+
+
 
     }
 

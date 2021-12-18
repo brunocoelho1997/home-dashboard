@@ -25,4 +25,4 @@ docker build --tag home-dashboard-react:v1.0 .
 echo "\n\n\n\n\n"
 echo "----------------------------"
 echo "Docker - running the new container"
-docker run -d -v /app/node_modules -p 3000:3000 home-dashboard-react:v1.0
+docker run -d -v /app/node_modules -p 3000:3000 --name watch-my-house-react home-dashboard-react:v1.0

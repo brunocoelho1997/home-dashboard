@@ -30,9 +30,4 @@ docker build --tag home-dashboard-api:v1.0 .
 echo "\n\n\n\n\n"
 echo "----------------------------"
 echo "Docker - running the new container"
-docker run -d -p 8080:8080 home-dashboard-api:v1.0
-
-
-#react commands
-#docker build -t sample:dev .
-#docker run -d -v /app/node_modules -p 3000:3000 sample:dev
+docker run -d -p 8080:8080 --name watch-my-house-api home-dashboard-api:v1.0

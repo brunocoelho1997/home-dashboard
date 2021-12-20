@@ -51,7 +51,6 @@ function DayChartEnviromentDataComponent() {
   
   const [data, setData] = React.useState<any>(null);
   
-  
   useEffect(() => {
     
     async function getEnvironmentDataFromDay() {
@@ -108,8 +107,18 @@ function DayChartEnviromentDataComponent() {
   return (
     <div className="container-fluid text-white default-component mb-5">
       <div className="default-component-card environment-data-chart-day">
-        {data ? <Line options={options} data={data} /> : "Not loaded yet"} 
+        {data ? <Line options={options} data={data} /> : getLoadingSpinners()} 
       </div>
+    </div>
+  );
+}
+
+function getLoadingSpinners() { 
+  return (
+    <div>
+      <div className="spinner-grow text-primary" role="status"></div>
+      <div className="spinner-grow text-warning px-3" role="status"></div>
+      <div className="spinner-grow text-danger px-3" role="status"></div>
     </div>
   );
 }

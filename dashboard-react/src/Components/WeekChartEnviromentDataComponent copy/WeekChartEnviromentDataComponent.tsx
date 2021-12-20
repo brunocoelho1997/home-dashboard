@@ -36,7 +36,7 @@ export const options = {
     },
     title: {
       display: true,
-      text: 'Temperatura, Humidade e Nível de Fumo ao longo do dia',
+      text: 'Temperatura, Humidade e Nível de Fumo ao longo da semana',
     },
   },
 };
@@ -107,8 +107,6 @@ function WeekChartEnviromentDataComponent() {
           labels[i] = getDayOfTheWeek(dayOfWeek);
         }
 
-
-
         setData(data); 
 
       });
@@ -119,15 +117,28 @@ function WeekChartEnviromentDataComponent() {
   return (
     <div className="container-fluid text-white default-component mb-5">
     
+
       <div className="default-component-card environment-data-chart-day">
         
-        {data ? <Line options={options} data={data} /> : "Not loaded yet"} 
-
+        {data ? <Line options={options} data={data} /> : getLoadingSpinners()} 
+        
       </div>
 
     </div>
   );
 }
+
+function getLoadingSpinners() { 
+  return (
+    <div>
+      <div className="spinner-grow text-primary" role="status"></div>
+      <div className="spinner-grow text-warning px-3" role="status"></div>
+      <div className="spinner-grow text-danger px-3" role="status"></div>
+    </div>
+  );
+}
+
+
 
 function getDayOfTheWeek(day: number) {
   switch (day) {

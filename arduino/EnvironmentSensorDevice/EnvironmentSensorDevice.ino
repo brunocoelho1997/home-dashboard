@@ -9,7 +9,7 @@ SoftwareSerial esp(2,3);
 #define IP "192.168.1.72" //dashboard-api IP - bs-worker
 #define PORT "8080" //dashboard-api IP
 #define SEND_DATA_ENDPOINT "/devices/sendData"
-#define DEVICE_UUID "7405707937"
+#define DEVICE_UUID "1435707937"
 #define dht_apin A0 // Analog Pin sensor is connected to
 
 int smokeA0 = A1; // Smoke Level Analog Pin sensor is connected to

@@ -64,19 +64,18 @@ function WeatherAndEnviromentDataComponent() {
                 ) 
               })}
             </div>
-            <div className="row mt-2">
-              <div className="col-md-12">
-                <DayChartEnviromentDataComponent />
-              </div>
-            </div>
-            <div className="row mt-2">
-              <div className="col-md-12">
-                <WeekChartEnviromentDataComponent />
-              </div>
-            </div>
           </div>
         </div>
       </div>
+      <div className="row mt-2 ml-2">
+        <div className="col-md-6">
+          <DayChartEnviromentDataComponent />
+        </div>
+        <div className="col-md-6">
+          <WeekChartEnviromentDataComponent />
+        </div>
+      </div>
+            
     </div>
   );
 }

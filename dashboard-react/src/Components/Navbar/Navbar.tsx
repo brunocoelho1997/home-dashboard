@@ -8,7 +8,7 @@ class Navbar extends React.Component {
       <nav className="navbar bg-dark navbar-dark shadow-sm">
         <div className="container-fluid">
           <a className="navbar-brand" href="#">Whatch My House - Dashboard</a>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+          {/* <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="collapsibleNavbar">
@@ -23,7 +23,7 @@ class Navbar extends React.Component {
                 <a className="nav-link" href="#">Link</a>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
       </nav>
     );

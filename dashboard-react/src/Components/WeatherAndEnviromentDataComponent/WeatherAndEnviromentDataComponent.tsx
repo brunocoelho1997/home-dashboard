@@ -59,7 +59,7 @@ function WeatherAndEnviromentDataComponent() {
               {environmentData.map((environmentDataEntry, i) => {     
                 return (
                   <div className="col-md-4 p-1" key={i}>
-                    <EnviromentDataComponent environmentDataDto={environmentDataEntry} />
+                    <EnviromentDataComponent environmentDataDto={environmentDataEntry} componentClassName={i<3? 'bg-dark' : 'default-component'}/>
                   </div>
                 ) 
               })}

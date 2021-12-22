@@ -6,12 +6,13 @@ import './EnviromentDataComponent.css';
 
 type EnviromentDataComponentProps = {
   environmentDataDto: IEnvironmentDataDto
+  componentClassName: string
 }
 class EnviromentDataComponent extends Component<EnviromentDataComponentProps> {
 
-  render() {
+    render() {
     return (
-      <div className="container-fluid text-white default-component">
+      <div className={`container-fluid text-white  ${this.props.componentClassName}`}>
       
         <div className="default-component-card">
           <div>{this.props.environmentDataDto.name}</div>
